@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hujajj
+      POSTGRES_USER: hujajj
+      POSTGRES_PASSWORD: hujajj_change_me
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./backend/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://hujajj:hujajj_change_me@db:5432/hujajj
+      DATABASE_SSL: "false"
+      JWT_SECRET: local_dev_only_secret_change_me_before_deploying_1234
+      JWT_EXPIRES_IN: 12h
+      NODE_ENV: development
+      PORT: 4000
+      CORS_ORIGIN: "*"
+    ports:
+      - "4000:4000"
+
+volumes:
+  pgdata:
