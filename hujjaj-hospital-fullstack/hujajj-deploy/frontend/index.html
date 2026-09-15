@@ -815,18 +815,9 @@
        window.HUJAJJ_API_BASE = 'https://your-backend-domain.com';
      ══════════════════════════════════════════════════════════════ -->
 <script>
-  window.HUJAJJ_API_BASE = (function () {
-    var host = window.location.hostname;
-    // Matches Codespaces forwarded hostnames like:
-    // cuddly-spoon-xrvvr9x9567xf6j4w-3000.app.github.dev
-    var match = host.match(/^(.*)-(\d+)\.app\.github\.dev$/);
-    if (match) {
-      var base = match[1];
-      return window.location.protocol + '//' + base + '-4000.app.github.dev';
-    }
-    // Fallback for local development (same machine, not Codespaces).
-    return 'http://localhost:4000';
-  })();
+  // Live backend URL (deployed on Render). Update this if you ever
+  // redeploy the backend to a different URL.
+  window.HUJAJJ_API_BASE = 'https://hujjaj-project.onrender.com';
 </script>
 
 <script>
